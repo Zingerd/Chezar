@@ -15,7 +15,7 @@ public class Main {
         Scanner scanner = new Scanner(file);
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Enter Key encrypt :");
+        System.out.println("Key encrypt :");
         int key = input.nextInt();
         String line="";
 
@@ -32,7 +32,7 @@ public class Main {
         String out=deshif(output,key);
         outDeshif(out);
         scanner.close();
-        frequency_analysis(out);
+        frequency_analysis(output);
     }
 
     public static String Chezar(String msg, int shift) {
@@ -41,14 +41,14 @@ public class Main {
             char c = (char) (msg.charAt(i) + shift%33);
 
             if (c > 'я')
-                s += (char) (msg.charAt(i) - (33 - shift));
+                s += (char) (msg.charAt(i) - (33 % shift));
             else
                 s += (char) (msg.charAt(i) + shift);
         }
         return s;
       }
 
-    public  static void outChezar(String msg){
+    public  static String outChezar(String msg){
           try(FileWriter fw= new FileWriter("Chezar.txt")){
               for(int i=0;i<msg.length();i++) {
                   fw.write(msg.charAt(i));
@@ -56,6 +56,7 @@ public class Main {
           } catch (IOException ex) {
               ex.printStackTrace(System.out);
           }
+          return  "";
       }
 
     public static String deshif(String msg, int shift) {
@@ -66,7 +67,7 @@ public class Main {
 
 
             if (c > 'я')
-                s += (char) (msg.charAt(i) + (33 + shift));
+                s += (char) (msg.charAt(i) + (33 %shift));
 
 
             else
@@ -100,24 +101,11 @@ public static  String frequency_analysis(String text) {
             new ArrayList<>(map.entrySet());
     entries.sort((o1, o2) -> Character.compare(o1.getKey(), o2.getKey()));
     for (Map.Entry<Character, Integer> entry : entries) {
-        System.out.println(entry.getKey() + " " + (double)entry.getValue()/(text.length()-1));
+        System.out.println(entry.getKey() + " :" + (double)entry.getValue());//(text.length()-1));
 
     }
     return text;
-}
-    /*public static String Che(String msg, int shift) {
-        String s = "";
-
-        for (int i = 0; i < msg.length(); i++) {
-            char c = (char) (msg.charAt(i) - shift%33);
-
-            if (c > 'я')
-                s += (char) (msg.charAt(i) + (33 + shift));
-            else
-                s += (char) (msg.charAt(i) - shift);
-        }
-        return s;
-    }*/
+ }
 }
 
 
